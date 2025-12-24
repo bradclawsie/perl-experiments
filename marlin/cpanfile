@@ -1,0 +1,17 @@
+requires 'App::perlimports';
+requires 'bareword::filehandles';
+requires 'Cpanel::JSON::XS';
+requires 'English';
+requires 'indirect';
+requires 'multidimensional';
+requires 'Perl::Critic';
+requires 'Perl::Critic::Bangs';
+requires 'Perl::Critic::Community';
+requires 'Perl::Critic::StricterSubs';
+requires 'Perl::Critic::TooMuchCode';
+requires 'Perl::Tidy';
+requires 'Perl::Tidy::Sweetened';
+requires 'strictures';
+requires 'Term::ReadLine::Gnu';
+requires 'Test2::Harness';
+requires 'Test2::Suite';
