@@ -66,6 +66,9 @@ imports:
 repl:
     perl -de 0
 
+run:
+    perl ./main.pl
+
 # perltidy on all files.
 tidy:
     find . -name \*.pm -print0 | xargs -0 {{ PERLTIDY }} 2>/dev/null
