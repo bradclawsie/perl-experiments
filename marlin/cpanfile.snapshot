@@ -2649,6 +2649,15 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 6.58
       ExtUtils::ParseXS 3.16
       perl 5.008005
+  Types-UUID-0.004
+    pathname: T/TO/TOBYINK/Types-UUID-0.004.tar.gz
+    provides:
+      Types::UUID 0.004
+    requirements:
+      ExtUtils::MakeMaker 6.17
+      Type::Tiny 1.000000
+      UUID::Tiny 1.02
+      perl 5.008
   URI-5.34
     pathname: O/OA/OALDERS/URI-5.34.tar.gz
     provides:

@@ -18,3 +18,4 @@ requires 'Test2::Harness';
 requires 'Test2::Suite';
 requires 'Type::Tiny';
 requires 'Types::Common';
+requires 'Types::UUID';
