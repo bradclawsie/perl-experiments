@@ -6,7 +6,7 @@ package Model {
   use Types::Common -all, -lexical;
   use Types::UUID;
   use Marlin::Role
-    -requires => [qw/insert read/],
+    -requires => [qw/insert read fun/],
     'id!' => Uuid,
     'ctime==!' => PositiveOrZeroInt,
     'mtime==!' => PositiveOrZeroInt,
@@ -29,6 +29,7 @@ package Org {
   use Marlin
     -with => [qw/Model/],
     'name!' => NonEmptyStr,
+    'other' => { isa => sub($v) { say "V:$v"; } },
     ;
 
   signature_for insert => (
@@ -48,6 +49,15 @@ package Org {
   sub read ($self, $args) {
     return $args->y;
   }
+
+  signature_for fun => (
+    method => false,
+    named => [z => Str],
+  );
+
+  sub fun($args) {
+    say $args->z;
+  }
 }
 
 use UUID qw( uuid4 );
@@ -57,10 +67,12 @@ my $org = Org->new(
   ctime => time,
   mtime => time,
   role => 2,
+  other => 'hello',
 );
 
 say $org->insert(x => 'X');
 say $org->read(y => 'Y');
 say $org->update_status(z => 99);
+say Org::fun(z => 'ZZ');
 
 __END__
