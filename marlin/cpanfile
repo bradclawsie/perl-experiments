@@ -19,3 +19,4 @@ requires 'Test2::Suite';
 requires 'Type::Tiny';
 requires 'Types::Common';
 requires 'Types::UUID';
+requires 'UUID';
