@@ -1,75 +1,66 @@
 #!/usr/bin/env perl
 use v5.42;
-{
-  # no warnings;
+
+package Model {
   use Marlin::Util -all, -lexical;
   use Types::Common -all, -lexical;
+  use Types::UUID;
+  use Marlin::Role
+    -requires => [qw/insert read/],
+    'id!' => Uuid,
+    'ctime==!' => PositiveOrZeroInt,
+    'mtime==!' => PositiveOrZeroInt,
+    'role!' => { enum => [1,2,3], default => 1 },
+    ;
 
-  package Person {
-    use Marlin
-      'given_name!'   => NonEmptyStr,
-      'family_name!'  => NonEmptyStr,
-      'name_style'    => { enum => [qw/western eastern/], default => 'western' },
-      'full_name'     => { is => lazy, builder => true },
-      'just_once'     => { is => lazy, builder => true },
-      'x' => { builder => true },
-      'birth_date?';
-    
-    sub _build_full_name($self) {
-      return sprintf( '%s %s', uc($self->family_name), $self->given_name )
-        if $self->name_style eq 'eastern';
-      return sprintf( '%s %s', $self->given_name, $self->family_name );
-    }
-
-    sub _build_just_once($self) {
-      say "----";
-      state $v;
-      if (defined $v) {
-        return $v;
-      } else {
-        say 'setting v';
-        $v = 'VVV';
-        return $v;
-      }
-    }
-
-    sub _build_x($self) { return 'x' }
-    
-    signature_for hello => (
-      method => 1,
-      named => [
-        a => Str,
-      ],
+    signature_for update_status => (
+      method => true,
+      named => [z => Int],
     );
 
-    sub hello($self, $args) {
-      say $args->a;
+    sub update_status ($self, $args) {
+      return $args->z;
     }
+}
 
-    sub class_method($class) {
-      say 'in class method';
-    }
-  }
+package Org {
+  use Marlin::Util -all, -lexical;
+  use Types::Common -all, -lexical;
+  use Marlin
+    -with => [qw/Model/],
+    'name!' => NonEmptyStr,
+    ;
 
-  my $p = Person->new(
-    given_name => 'brad',
-    family_name => 'clawsie',
-    # birth_date => '09/24/1970',
-    x => 'X',
+  signature_for insert => (
+    method => true,
+    named => [x => Str],
   );
 
-  use Data::Dumper;
-  warn Dumper $p;
-  warn $p->full_name;
-  if ($p->has_birth_date) {
-    warn $p->birth_date;
+  sub insert ($self, $args) {
+    return $args->x;
   }
-  warn $p->hello(a => 'hello!!');
-  Person->class_method;
-  warn "^^^^^^^^^^^";
-  warn $p->just_once;
-  warn "^^^^^^^^^^^";
-  warn $p->just_once;
+
+  signature_for read => (
+    method => true,
+    named => [y => Str],
+  );
+
+  sub read ($self, $args) {
+    return $args->y;
+  }
 }
+
+use UUID qw( uuid4 );
+my $org = Org->new(
+  id => uuid4,
+  name => uuid4,
+  ctime => time,
+  mtime => time,
+  role => 2,
+);
+
+say $org->insert(x => 'X');
+say $org->read(y => 'Y');
+say $org->update_status(z => 99);
 
 __END__

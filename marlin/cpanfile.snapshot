@@ -2737,6 +2737,26 @@ DISTRIBUTIONS
       strict 0
       utf8 0
       warnings 0
+  UUID-0.37
+    pathname: J/JR/JRM/UUID-0.37.tar.gz
+    provides:
+      UUID 0.37
+    requirements:
+      Carp 0
+      Config 0
+      Devel::CheckLib 1.14
+      DynaLoader 0
+      Exporter 0
+      ExtUtils::MakeMaker 7.06
+      File::Spec 0
+      File::Temp 0.10
+      List::Util 1.29
+      Time::HiRes 0
+      blib 0
+      perl 5.005063
+      strict 0
+      vars 0
+      warnings 0
   UUID-Tiny-1.04
     pathname: C/CA/CAUGUSTIN/UUID-Tiny-1.04.tar.gz
     provides:
