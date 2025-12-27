@@ -47,7 +47,7 @@ package Org {
   );
 
   sub read ($self, $args) {
-    return $args->y;
+    return $self->insert(x => $args->y);
   }
 
   signature_for fun => (
@@ -57,33 +57,6 @@ package Org {
 
   sub fun($args) {
     say $args->z;
-  }
-
-  signature_for fun2 => (
-    method => false,
-    named => [z => Str],
-  );
-
-  sub fun2($args) {
-    my $hr = { z => 44 };
-    __PACKAGE__::fun(%{$hr});
-  }
-
-  signature_for fun3 => (
-    method => false,
-    named => [z => Str],
-  );
-
-  sub fun3($args) {
-    use UUID qw( uuid4 );
-    return __PACKAGE__->new(
-      id => uuid4,
-      name => uuid4,
-      ctime => time,
-      mtime => time,
-      role => 2,
-      other => 'hello',
-    );
   }
 }
 
@@ -101,9 +74,7 @@ say $org->insert(x => 'X');
 say $org->read(y => 'Y');
 say $org->update_status(z => 99);
 say Org::fun(z => 'ZZ');
-say Org::fun2(z => 'ZZ');
-my $org3 = Org::fun3(z => 'ZZ');
-say $org3->role;
+say $org->role;
 
 my $args = {
   id => uuid4,
@@ -115,5 +86,8 @@ my $args = {
 };
 
 my $org2 = Org->new($args);
+
+say "calling method as if static";
+say Org->read(y => 'FF');
 
 __END__
