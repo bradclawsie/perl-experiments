@@ -60,6 +60,6 @@ object::define(
   'signing_key:Uuid:default(\'' . uuid4 . '\')',
 );
 
-object::define('GL::Crypt::Key', 'value:Key:required:readonly',)
+object::define('GL::Crypt::Key', 'value:Key:required:readonly');
 
 __END__
