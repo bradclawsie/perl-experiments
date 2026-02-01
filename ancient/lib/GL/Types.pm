@@ -13,8 +13,6 @@ our $STATUS_UNCONFIRMED = const::c(1);
 our $STATUS_ACTIVE      = const::c(2);
 our $STATUS_INACTIVE    = const::c(3);
 
-our $NULL_UUID = const::c(uuid0);
-
 object::register_type('Role',     sub ($v) {
     $ROLE_TEST == $v || $ROLE_NORMAL == $v || $ROLE_ADMIN == $v
   });
@@ -24,7 +22,7 @@ object::register_type('Status',   sub ($v) {
 object::register_type('Uuid',     sub ($v) { my $b; parse($v, $b) == 0 });
 object::register_type('UnixTime', sub ($v) { int($v) > 1768753518 });
 
-object::define('Meta',
+object::define('GL::Meta',
   'ctime:UnixTime:readonly:default(0)',
   'id:Uuid:required:readonly',
   'mtime:UnixTime:default(0)',
@@ -33,12 +31,13 @@ object::define('Meta',
   'status:Status:default(' . $STATUS_ACTIVE . ')',
 );
 
-object::define('Runtime',
-  'api_version:Str:readonly:default(q{v0})',
-  'dbi:ArrayRef:readonly:required',
-  'role:Role:readonly:default(' . $ROLE_TEST . ')',
+object::define('GL::Runtime',
+  'api_version:Str:readonly:default(\'v0\')',
+  'dbi:ArrayRef:required:readonly',
+  'default_role:Role:readonly:default(' . $ROLE_TEST . ')',
   'get_key:CodeRef:required:readonly',
   'encryption_key_version:Uuid:required:readonly',
+  'mode:readonly:default(\'test\')',
   'repository_base:Str:readonly:default(\'' . File::Spec->tmpdir. '\')',
   'signing_key:Uuid:default(\''. uuid4 . '\')',
 );

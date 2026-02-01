@@ -8,6 +8,8 @@ PERLIMPORTS := "perlimports -i --config-file=" + PWD / ".perlimports.toml"
 PERLTIDY := 'perltidier'
 PLACK_ENV := 'test'
 YATH := 'yath'
+DB_FILE := PWD / "db" / "dev.db"
+SCHEMA := PWD / "sql" / "schema.sql"
 LOCAL_BIN := PWD / "local" / "bin"
 export PATH := LOCAL_BIN + ":" + env("PATH")
 export PERL5LIB := PERL5LIB_LIB
@@ -44,6 +46,17 @@ critic:
     @find psgi -name \*.psgi -print0 | xargs -0 {{ PERLCRITIC }}
     @find t -name \*.t -print0 | xargs -0 {{ PERLCRITIC }} --theme=tests
 
+development-psgi:
+    export \
+      DB_FILE={{ DB_FILE }} \
+      SCHEMA={{ SCHEMA }};\
+      mkdir -p log && mkdir -p db && pushd psgi && plackup -E development app.psgi
+
+test-psgi:
+    export \
+      SCHEMA={{ SCHEMA }};\
+      mkdir -p log && pushd psgi && plackup -E test app.psgi
+
 imports:
     @find lib -name \*.pm -print0 | xargs -0 {{ PERLIMPORTS }} 2>/dev/null
     @find psgi -name \*.psgi -print0 | xargs -0 {{ PERLIMPORTS }} 2>/dev/null
@@ -60,7 +73,11 @@ tidy:
 # Commands using "run".
 
 run *CMD:
-      @{{ CMD }}
+    @export \
+      DB_FILE={{ DB_FILE }} \
+      PLACK_ENV={{ PLACK_ENV }} \
+      SCHEMA={{ SCHEMA }};\
+      {{ CMD }}
 
 repl: (run 'perl -de 0')
 
