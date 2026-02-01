@@ -103,6 +103,17 @@ DISTRIBUTIONS
     requirements:
       B 0
       ExtUtils::MakeMaker 0
+  Bytes-Random-Secure-Tiny-1.011
+    pathname: D/DA/DAVIDO/Bytes-Random-Secure-Tiny-1.011.tar.gz
+    provides:
+      Bytes::Random::Secure::Tiny 1.011
+      Crypt::Random::Seed::Embedded 1.011
+      Math::Random::ISAAC::Embedded 1.011
+      Math::Random::ISAAC::PP::Embedded 1.011
+    requirements:
+      ExtUtils::MakeMaker 6.56
+      Test::More 0.98
+      perl 5.008000
   CPAN-Common-Index-0.010
     pathname: D/DA/DAGOLDEN/CPAN-Common-Index-0.010.tar.gz
     provides:

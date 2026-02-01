@@ -1,5 +1,6 @@
 requires 'Ancient';
 requires 'App::perlimports';
+requires 'Bytes::Random::Secure::Tiny';
 requires 'DBD::SQLite';
 requires 'DBIx::Connector';
 requires 'Perl::Critic';
