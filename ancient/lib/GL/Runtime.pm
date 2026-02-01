@@ -5,6 +5,9 @@ use const;
 use Carp qw( croak );
 use UUID qw( uuid4 );
 
+our $VERSION   = '0.0.1';
+our $AUTHORITY = 'cpan:bclawsie';
+
 my $dbi_with = sub ($db) {
   return [
     'dbi:SQLite:dbname=' . $db,
@@ -22,8 +25,8 @@ my $dbi_with = sub ($db) {
 my $test_get_key = sub ($encryption_key_version) {
   my $m = {
     $encryption_key_version => uuid4,
-    uuid4 => uuid4,
-    uuid4 => uuid4,
+    uuid4                   => uuid4,
+    uuid4                   => uuid4,
   };
   return sub ($version) {
     return $m->{$version} // croak 'bad key_version';
@@ -32,10 +35,9 @@ my $test_get_key = sub ($encryption_key_version) {
 
 sub for_test {
   my $encryption_key_version = uuid4;
-  return 
-    dbi => $dbi_with->(':memory:'),
+  return dbi               => $dbi_with->(':memory:'),
     encryption_key_version => $encryption_key_version,
-    get_key => $test_get_key->($encryption_key_version);
-};
+    get_key                => $test_get_key->($encryption_key_version);
+}
 
 __END__

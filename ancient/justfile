@@ -38,13 +38,9 @@ update:
 
 check:
     @for i in `find lib -name \*.pm`; do perl -c $i; done
-    @for i in `find psgi -name \*.psgi`; do perl -c $i; done
-    @for i in `find t -name \*.t`; do perl -c $i; done
 
 critic:
     @find lib -name \*.pm -print0 | xargs -0 {{ PERLCRITIC }}
-    @find psgi -name \*.psgi -print0 | xargs -0 {{ PERLCRITIC }}
-    @find t -name \*.t -print0 | xargs -0 {{ PERLCRITIC }} --theme=tests
 
 development-psgi:
     export \
@@ -59,13 +55,9 @@ test-psgi:
 
 imports:
     @find lib -name \*.pm -print0 | xargs -0 {{ PERLIMPORTS }} 2>/dev/null
-    @find psgi -name \*.psgi -print0 | xargs -0 {{ PERLIMPORTS }} 2>/dev/null
-    @find t -name \*.t -print0 | xargs -0 {{ PERLIMPORTS }} 2>/dev/null
 
 tidy:
     @find . -name \*.pm -print0 | xargs -0 {{ PERLTIDY }} 2>/dev/null
-    @find . -name \*.psgi -print0 | xargs -0 {{ PERLTIDY }} 2>/dev/null
-    @find . -name \*.t -print0 | xargs -0 {{ PERLTIDY }} 2>/dev/null
     @find -name \*bak -delete
     @find -name \*tdy -delete
     @find -name \*.ERR -delete

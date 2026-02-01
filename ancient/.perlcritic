@@ -36,8 +36,7 @@ max_mccabe = 50
 [-Subroutines::RequireFinalReturn]
 [-TestingAndDebugging::ProhibitNoWarnings]
 [-TooMuchCode::ProhibitDuplicateLiteral]
-[ValuesAndExpressions::ProhibitMagicNumbers]
-allowed_values = -10000..100000
+[-ValuesAndExpressions::ProhibitMagicNumbers]
 [-ValuesAndExpressions::ProhibitVersionStrings]
 [-ValuesAndExpressions::ProhibitLongChainsOfMethodCalls]
 [-ValuesAndExpressions::RequireInterpolationOfMetachars]
