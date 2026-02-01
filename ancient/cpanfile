@@ -1,0 +1,16 @@
+requires 'Ancient';
+requires 'App::perlimports';
+requires 'DBD::SQLite';
+requires 'DBIx::Connector';
+requires 'Perl::Critic';
+requires 'Perl::Critic::Bangs';
+requires 'Perl::Critic::Community';
+requires 'Perl::Critic::StricterSubs';
+requires 'Perl::Critic::TooMuchCode';
+requires 'Perl::Tidy';
+requires 'Perl::Tidy::Sweetened';
+requires 'strictures';
+requires 'Term::ReadLine::Gnu';
+requires 'Test2::Harness';
+requires 'Test2::Suite';
+requires 'UUID';
