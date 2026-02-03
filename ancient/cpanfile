@@ -1,6 +1,8 @@
 requires 'Ancient';
 requires 'App::perlimports';
 requires 'Bytes::Random::Secure::Tiny';
+requires 'CryptX';
+requires 'Crypt::Argon2';
 requires 'DBD::SQLite';
 requires 'DBIx::Connector';
 requires 'Perl::Critic';
