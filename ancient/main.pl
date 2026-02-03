@@ -16,8 +16,6 @@ use Data::Dumper;
 my $rt = GL::Runtime->new(GL::Runtime::for_test);
 warn Dumper $rt;
 
-$rt->build;
-
 my $key = GL::Crypt::Key->new(GL::Crypt::Key::rand);
 warn Dumper $key->value;
 
