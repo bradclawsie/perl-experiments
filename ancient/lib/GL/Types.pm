@@ -20,6 +20,10 @@ object::register_type('DB', sub ($v) { $v isa 'DBIx::Connector' });
 
 object::register_type('Key', sub ($v) { $v =~ m/^[\da-fA-F]{32}$/x });
 
+object::register_type('NonEmptyStr', sub ($v) { $v =~ m/^\S+$/x });
+
+object::register_type('Meta', sub ($v) { $v isa 'GL::Meta' });
+
 object::register_type(
   'Role',
   sub ($v) {
@@ -41,11 +45,18 @@ object::register_type('UnixTime', sub ($v) { int($v) > 176_875_351_8 });
 object::define(
   'GL::Meta',
   'ctime:UnixTime:default(0)',
-  'id:Uuid:required:readonly',
   'mtime:UnixTime:default(0)',
   'role:Role:readonly:default(' . $ROLE_TEST . ')',
   'signature:Uuid:default(\'' . uuid0 . '\')',
   'status:Status:default(' . $STATUS_ACTIVE . ')',
+);
+
+object::define(
+  'GL::Org',
+  'id:Uuid:required:readonly',
+  'meta:Meta:default(undef)',
+  'name:NonEmptyStr:required:readonly',
+  'owner:Uuid:default(\'' . uuid0 . '\')',
 );
 
 object::define(

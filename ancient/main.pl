@@ -7,10 +7,6 @@ use GL::Types;
 use GL::Runtime;
 use GL::Crypt::Key;
 
-my $t = time;
-my $meta = GL::Meta->new(
-  id => uuid4,
-);
 use Data::Dumper;
 
 my $rt = GL::Runtime->new(GL::Runtime::for_test);
