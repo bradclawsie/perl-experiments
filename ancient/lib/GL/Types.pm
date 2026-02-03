@@ -18,11 +18,18 @@ our $STATUS_INACTIVE    = const::c(3);
 
 object::register_type('DB', sub ($v) { $v isa 'DBIx::Connector' });
 
+object::register_type('SHA256Hex', sub ($v) { $v =~ m/^[\da-f]{64}$/x });
+
 object::register_type('Key', sub ($v) { $v =~ m/^[\da-fA-F]{32}$/x });
 
 object::register_type('NonEmptyStr', sub ($v) { $v =~ m/^\S+$/x });
 
-object::register_type('Meta', sub ($v) { $v isa 'GL::Meta' });
+object::register_type('GL_Meta', sub ($v) { $v isa 'GL::Meta' });
+
+object::register_type('GL_Crypt_Password',
+  sub ($v) { $v isa 'GL::Crypt::Password' });
+
+object::register_type('Password', sub ($v) { $v =~ m/\$argon2/x });
 
 object::register_type(
   'Role',
@@ -42,6 +49,8 @@ object::register_type('Uuid', sub ($v) { my $bin; parse($v, $bin) == 0 });
 
 object::register_type('UnixTime', sub ($v) { int($v) > 176_875_351_8 });
 
+object::define('GL::Crypt::Key', 'value:Key:required:readonly');
+
 object::define(
   'GL::Meta',
   'ctime:UnixTime:default(0)',
@@ -54,10 +63,12 @@ object::define(
 object::define(
   'GL::Org',
   'id:Uuid:required:readonly',
-  'meta:Meta:default(undef)',
+  'meta:GL_Meta:default(undef)',
   'name:NonEmptyStr:required:readonly',
   'owner:Uuid:default(\'' . uuid0 . '\')',
 );
+
+object::define('GL::Crypt::Password', 'value:Password:required:readonly');
 
 object::define(
   'GL::Runtime',
@@ -71,6 +82,20 @@ object::define(
   'signing_key:Uuid:default(\'' . uuid4 . '\')',
 );
 
-object::define('GL::Crypt::Key', 'value:Key:required:readonly');
+object::define(
+  'GL::User',
+  'display_name:NonEmptyStr:required',
+  'display_name_digest:SHA256Hex:default(undef)',
+  'ed25519_private:Str:default(undef)',
+  'ed25519_public:Str:default(undef)',
+  'ed25519_public_digest:SHA256Hex:default(undef)',
+  'email:NonEmptyStr:required',
+  'email_digest:SHA256Hex:default(undef)',
+  'id:Uuid:required:readonly',
+  'key_version:Uuid:default(undef)',
+  'meta:Meta:default(undef)',
+  'org:Uuid:default(\'' . uuid0 . '\')',
+  'password:GL_Crypt_Password:default(undef)',
+);
 
 __END__
