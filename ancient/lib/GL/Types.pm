@@ -40,7 +40,7 @@ object::register_type('UnixTime', sub ($v) { int($v) > 176_875_351_8 });
 
 object::define(
   'GL::Meta',
-  'ctime:UnixTime:readonly:default(0)',
+  'ctime:UnixTime:default(0)',
   'id:Uuid:required:readonly',
   'mtime:UnixTime:default(0)',
   'role:Role:readonly:default(' . $ROLE_TEST . ')',
@@ -51,7 +51,7 @@ object::define(
 object::define(
   'GL::Runtime',
   'api_version:Str:readonly:default(\'v0\')',
-  'db:DB:required',
+  'db:DB:required:readonly',
   'default_role:Role:readonly:default(' . $ROLE_TEST . ')',
   'get_key:CodeRef:required:readonly',
   'encryption_key_version:Uuid:required:readonly',
