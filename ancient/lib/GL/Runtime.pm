@@ -53,48 +53,28 @@ my $test_get_key = sub ($encryption_key_version) {
 };
 
 sub for_test {
+  my $db          = $db_with->($dbi_with->(':memory:'));
+  my $schema_file = $ENV{SCHEMA}              || croak 'SCHEMA not set';
+  my $schema      = file::slurp($schema_file) || croak $!;
+  $db->txn(fixup => sub ($dbh) { $dbh->do($schema) });
+
   my $encryption_key_version = uuid4;
-  return db                => $db_with->($dbi_with->(':memory:')),
+
+  return db                => $db,
     encryption_key_version => $encryption_key_version,
     get_key                => $test_get_key->($encryption_key_version);
 }
 
 sub for_development {
+  my $db_file = $ENV{DB_FILE}                     || croak 'DB_FILE not set';
+  my $db      = $db_with->($dbi_with->($db_file)) || croak $!;
+
   my $encryption_key_version = uuid4;
-  my $db_file                = $ENV{DB_FILE} || croak 'DB_FILE not set';
-  return db                => $db_with->($dbi_with->($db_file)),
+
+  return db                => $db,
     encryption_key_version => $encryption_key_version,
     get_key                => $test_get_key->($encryption_key_version),
     mode                   => 'development';
-}
-
-sub build ($self) {
-  if ($self->mode eq 'test') {
-    my $schema_file = $ENV{SCHEMA}              || croak 'SCHEMA not set';
-    my $schema      = file::slurp($schema_file) || croak $!;
-    $self->db->txn(fixup => sub ($dbh) { $dbh->do($schema) });
-  }
-  elsif ($self->mode eq 'development') {
-    my $db_file = $ENV{DB_FILE} || croak 'DB_FILE not set';
-    if (-f $db_file) {
-      my @tables = $self->db->dbh->tables;
-      croak 'development db tables' if scalar @tables == 0;
-    }
-    else {
-      my $db_dir = file::dirname($db_file);
-      unless (-d $db_dir) {
-        mkdir $db_dir || croak $!;
-      }
-      my $schema_file = $ENV{SCHEMA}              || croak 'SCHEMA not set';
-      my $schema      = file::slurp($schema_file) || croak $!;
-      $self->db->txn(fixup => sub ($dbh) { $dbh->do($schema) });
-    }
-  }
-  else {
-    croak 'unknown mode';
-  }
-
-  return $self;
 }
 
 __END__
