@@ -7,13 +7,13 @@ DISTRIBUTIONS
       Algorithm::Diff::_impl 1.201
     requirements:
       ExtUtils::MakeMaker 0
-  Ancient-0.10
-    pathname: L/LN/LNATION/Ancient-0.10.tar.gz
+  Ancient-0.15
+    pathname: L/LN/LNATION/Ancient-0.15.tar.gz
     provides:
-      Ancient 0.10
+      Ancient 0.15
     requirements:
       ExtUtils::MakeMaker 0
-      perl 5.014
+      perl 5.010
   App-perlimports-0.000058
     pathname: O/OA/OALDERS/App-perlimports-0.000058.tar.gz
     provides:

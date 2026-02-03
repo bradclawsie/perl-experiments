@@ -8,7 +8,8 @@ PERLIMPORTS := "perlimports -i --config-file=" + PWD / ".perlimports.toml"
 PERLTIDY := 'perltidier'
 PLACK_ENV := 'test'
 YATH := 'yath'
-DB_FILE := PWD / "db" / "dev.db"
+DB_DIR := PWD / "db"
+DB_FILE := DB_DIR / "dev.db"
 SCHEMA := PWD / "sql" / "schema.sql"
 LOCAL_BIN := PWD / "local" / "bin"
 export PATH := LOCAL_BIN + ":" + env("PATH")
@@ -44,6 +45,11 @@ critic:
     @find lib -name \*.pm -print0 | xargs -0 {{ PERLCRITIC }}
     @find t -name \*.t -print0 | xargs -0 {{ PERLCRITIC }} --theme=tests
 
+development-db:
+    @rm -f {{ DB_FILE }} && \
+      mkdir -p {{ DB_DIR }} && \
+      sqlite3 {{ DB_FILE }} < {{ SCHEMA }}
+
 development-psgi:
     export \
       DB_FILE={{ DB_FILE }} \
@@ -77,7 +83,7 @@ run *CMD:
 
 repl: (run 'perl -de 0')
 
-test: (run 'find t -name \*.t -print0 | xargs -0 ' + YATH)
+test: development-db (run 'find t -name \*.t -print0 | xargs -0 ' + YATH)
 
 # Run a single test; e.g. "just yath t/00-test.t".
 yath TEST: (run YATH + " " + TEST)

@@ -9,7 +9,7 @@ use UUID                    qw( uuid4 );
 use GL::Runtime ();
 
 subtest 'test db' => sub {
-  my $rt = GL::Runtime->new(GL::Runtime::for_test)->build;
+  my $rt = GL::Runtime->new(GL::Runtime::for_test);
 
   ok(
     lives {
@@ -27,7 +27,8 @@ subtest 'test db' => sub {
 };
 
 subtest 'development db' => sub {
-  my $rt = GL::Runtime->new(GL::Runtime::for_development)->build;
+  ok(true);
+  my $rt = GL::Runtime->new(GL::Runtime::for_development);
 
   ok(
     lives {
@@ -37,6 +38,7 @@ subtest 'development db' => sub {
           $_->selectrow_array('select count(*) from user');
         }
       );
+      like($c, qr/^\d+$/);
     },
   ) or note($EVAL_ERROR);
 
@@ -44,7 +46,7 @@ subtest 'development db' => sub {
 };
 
 subtest 'get_key' => sub {
-  my $rt = GL::Runtime->new(GL::Runtime::for_test)->build;
+  my $rt = GL::Runtime->new(GL::Runtime::for_test);
 
   ok(
     lives {
