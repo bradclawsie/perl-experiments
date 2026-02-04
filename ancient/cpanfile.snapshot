@@ -7,10 +7,10 @@ DISTRIBUTIONS
       Algorithm::Diff::_impl 1.201
     requirements:
       ExtUtils::MakeMaker 0
-  Ancient-0.15
-    pathname: L/LN/LNATION/Ancient-0.15.tar.gz
+  Ancient-0.18
+    pathname: L/LN/LNATION/Ancient-0.18.tar.gz
     provides:
-      Ancient 0.15
+      Ancient 0.17
     requirements:
       ExtUtils::MakeMaker 0
       perl 5.010
@@ -2092,23 +2092,23 @@ DISTRIBUTIONS
       Perl::Critic 0
       Scalar::Util 1.50
       version 0.77
-  Perl-Tidy-20260109
-    pathname: S/SH/SHANCOCK/Perl-Tidy-20260109.tar.gz
+  Perl-Tidy-20260204
+    pathname: S/SH/SHANCOCK/Perl-Tidy-20260204.tar.gz
     provides:
-      Perl::Tidy 20260109
-      Perl::Tidy::Debugger 20260109
-      Perl::Tidy::Diagnostics 20260109
-      Perl::Tidy::FileWriter 20260109
-      Perl::Tidy::Formatter 20260109
-      Perl::Tidy::HtmlWriter 20260109
-      Perl::Tidy::IOScalar 20260109
-      Perl::Tidy::IOScalarArray 20260109
-      Perl::Tidy::IndentationItem 20260109
-      Perl::Tidy::Logger 20260109
-      Perl::Tidy::Tokenizer 20260109
-      Perl::Tidy::VerticalAligner 20260109
-      Perl::Tidy::VerticalAligner::Alignment 20260109
-      Perl::Tidy::VerticalAligner::Line 20260109
+      Perl::Tidy 20260204
+      Perl::Tidy::Debugger 20260204
+      Perl::Tidy::Diagnostics 20260204
+      Perl::Tidy::FileWriter 20260204
+      Perl::Tidy::Formatter 20260204
+      Perl::Tidy::HtmlWriter 20260204
+      Perl::Tidy::IOScalar 20260204
+      Perl::Tidy::IOScalarArray 20260204
+      Perl::Tidy::IndentationItem 20260204
+      Perl::Tidy::Logger 20260204
+      Perl::Tidy::Tokenizer 20260204
+      Perl::Tidy::VerticalAligner 20260204
+      Perl::Tidy::VerticalAligner::Alignment 20260204
+      Perl::Tidy::VerticalAligner::Line 20260204
     requirements:
       ExtUtils::MakeMaker 0
       perl 5.008001
